@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    margin: 20px 20px 20px 20px;
+}
+
+.box {
+    width: 50%;
+}
+
+#imgBox {
+    text-align: center;
+}
+
+#info {
+    list-style: none;
+    color: white;
+}
+
+#info li {
+    margin-bottom: 5px;
+}
