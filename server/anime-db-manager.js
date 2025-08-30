@@ -30,9 +30,9 @@ class AnimeDBManager {
         if (!this.#connection) {
             try {
                 this.#connection = await mysql.createConnection({
-                    host: process.env.Host || "localhost",
-                    user: process.env.user,
-                    password: process.env.password,
+                    host: process.env.HOST || "localhost",
+                    user: process.env.USERNAME,
+                    password: process.env.PASSWORD,
                     database: "anime_db"
                 });
 
@@ -47,17 +47,49 @@ class AnimeDBManager {
     /**
      * Disconnect from database
      */
-    disconnect() {
-        if (!this.#connection) {
+    async disconnect() {
+        if (this.#connection) {
             try {
-                this.#connection.end();
+                await this.#connection.end();
+
+                this.#connection = null;
 
                 console.log("Disconnected from database");
             }
             catch (err) {
-                console.err("Disconnect error:", err);
+                console.error("Disconnect error:", err);
             }
         }
+    }
+
+    /**
+     * Gets all anime in the database
+     *
+     * @returns {object[]} All the anime's id, name and image url
+     */
+    async getAnimes() {
+        console.log("Getting animes from database");
+
+        const query = "SELECT id, anime_name, img_url FROM anime_info";
+
+        const [results] = await this.#connection.execute(query);
+
+        return results;
+    }
+
+    /**
+     * Gets the anime information from the database
+     *
+     * @returns {object[]} All the anime's id, name and image url
+     */
+    async getAnimeInfo(id) {
+        console.log("Getting anime's information from database");
+
+        const query = "SELECT anime_name, img_url, author, rating FROM anime_info WHERE id = ?";
+
+        const [results] = await this.#connection.execute(query, [id]);
+
+        return results[0];
     }
 }
 
