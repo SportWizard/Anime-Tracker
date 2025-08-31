@@ -12,6 +12,13 @@ class AnimeDBManager {
     #connection = null;
 
     /**
+     * Prevent creation of object
+     */
+    constructor() {
+        throw new Error("AnimeDBManager: private constructor");
+    }
+
+    /**
      * Single instance (singleton)
      *
      * @returns {AnimeDBManager} Instance of AnimeDBManager
