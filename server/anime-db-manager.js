@@ -105,6 +105,22 @@ class AnimeDBManager {
 
         return results[0];
     }
+
+    /**
+     * Add anime and its' information to the database
+     *
+     * @param {string} animeName - name of the anime
+     * @param {string} imgUrl - url of the image
+     * @param {string} author - name of the author
+     * @param {number} rating - rating of the anime
+     */
+    async addAnime(animeName = null, imgUrl = null, author = null, rating = null) {
+        console.log("Adding anime to database");
+
+        const query = "INSERT INTO anime_info (anime_name, img_url, author, rating) VALUES (?, ?, ?, ?)";
+
+        await this.#connection.execute(query, [animeName, imgUrl, author, rating]);
+    }
 }
 
 export default AnimeDBManager;
