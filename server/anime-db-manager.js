@@ -8,6 +8,7 @@ dotenv.config();
  */
 class AnimeDBManager {
     static #instance = null;
+    static #allowed = false;
 
     #connection = null;
 
@@ -15,7 +16,11 @@ class AnimeDBManager {
      * Prevent creation of object
      */
     constructor() {
-        throw new Error("AnimeDBManager: private constructor");
+        // If allowed then it should be called from methods within the class
+        if (!AnimeDBManager.#allowed)
+            throw new Error("AnimeDBManager: private constructor");
+
+        AnimeDBManager.#allowed = false;
     }
 
     /**
@@ -24,8 +29,10 @@ class AnimeDBManager {
      * @returns {AnimeDBManager} Instance of AnimeDBManager
      */
     static getInstance() {
-        if (!AnimeDBManager.#instance)
+        if (!AnimeDBManager.#instance) {
+            AnimeDBManager.#allowed = true; // Allow to create an instance
             AnimeDBManager.#instance = new AnimeDBManager();
+        }
 
         return AnimeDBManager.#instance;
     }
