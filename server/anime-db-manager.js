@@ -121,6 +121,21 @@ class AnimeDBManager {
 
         await this.#connection.execute(query, [animeName, imgUrl, author, rating]);
     }
+
+    /**
+     * Update anime's information
+     *
+     * @param {number} id - id of the anime
+     * @param {string} column - name of the column in the database
+     * @param {string|number} value - value to be updated to for the column
+     */
+    async updateAnime(id, column, value) {
+        console.log(`Updating anime in database: column: ${column}, value: ${value}`);
+
+        const query = `UPDATE anime_info SET ${column} = ? WHERE id = ?`;
+
+        await this.#connection.execute(query, [value, id]);
+    }
 }
 
 export default AnimeDBManager;
