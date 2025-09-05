@@ -1,12 +1,17 @@
 import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
 import AnimeDBManager from "./anime-db-manager.js";
+
+dotenv.config();
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
-const PORT = 5500;
+const PORT = process.env.PORT || 5500;
 const HOST = "0.0.0.0"; // Listen on all network interfaces (localhost, LAN IP, etc.) e.g. Entering LAN IP address or localhost IP address will access the server
 
 app.get("/api/animes", async (req, res) => {
@@ -34,9 +39,9 @@ app.get("/api/anime-info", async (req, res) => {
     try {
         await animeDBManager.connect();
 
-        const results = await animeDBManager.getAnimeInfo(req.query.id);
+        const result = await animeDBManager.getAnimeInfo(req.query.id);
 
-        res.status(200).json({ results: results });
+        res.status(200).json({ result: result });
     }
     catch (err) {
         console.error("API GET anime info error:", err);
