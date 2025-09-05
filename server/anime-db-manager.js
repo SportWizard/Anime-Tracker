@@ -44,7 +44,7 @@ class AnimeDBManager {
         if (!this.#connection) {
             try {
                 this.#connection = await mysql.createConnection({
-                    host: process.env.HOST || "localhost",
+                    host: process.env.DB_HOST || "localhost",
                     user: process.env.USERNAME,
                     password: process.env.PASSWORD,
                     database: "anime_db"
@@ -84,7 +84,7 @@ class AnimeDBManager {
     async getAnimes() {
         console.log("Getting animes from database");
 
-        const query = "SELECT id, anime_name, img_url FROM anime_info";
+        const query = "SELECT id, anime_name, img_url FROM anime_info ORDER BY anime_name";
 
         const [results] = await this.#connection.execute(query);
 
