@@ -1,3 +1,7 @@
+#editButton {
+    float: right;
+}
+
 .container {
     display: flex;
     margin: 20px 20px 20px 20px;
@@ -18,4 +22,5 @@
 
 #info li {
     margin-bottom: 5px;
+    font-size: larger;
 }
